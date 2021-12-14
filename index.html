@@ -1,17 +1,136 @@
-<!doctype html>
- 
+<!DOCTYPE html>
 <html>
- 
-<head>
- 
-<title>This is the title of the webpage!</title>
- 
-</head>
- 
+  <head>
+    <meta name="keywords" content="Medicine, Supply Chain">
+    <meta name="description" content="Mapping pharmaceutical supply">
+    <meta name="author" content="David">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=UTF8">
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <script type="text/javascript" src="script.js"></script>
+  </head>
 <body>
- 
-<p>Hello World </p>
- 
+
+<h1>David's site</h1>
+
+<div class="tab">
+  <button class="tablinks" onclick="openTab(event, 'Home')">Home</button>
+  <button class="tablinks" onclick="openTab(event, 'Facilities')">Facilities</button>
+  <button class="tablinks" onclick="openTab(event, 'Products')">Products</button>
+  <button class="tablinks" onclick="openTab(event, 'Drug Product Risk')">Drug Product Risk</button>
+  <button class="tablinks" onclick="openTab(event, 'KRM Synthesis Routes')">KRM Synthesis Routes</button>
+  <button class="tablinks" onclick="openTab(event, 'Scenario Analysis')">Scenario Analysis</button>
+  <button class="tablinks" onclick="openTab(event, 'Alerts')">Alerts</button>
+</div> 
+
+<div id="Home" class="tabcontent">
+  <h2>Home</h2>
+
+  <div id='top10_list'></div>
+
+
+  <h3>Recent alerts</h3>
+  <p>Vincristine shortage underscores vulnerability of ‘fragile market’ for crucial treatments: <a href="https://analyticalmeanderings.github.io/">Impact</a></p>
+  <p>Flooding in India attributed to numerous shortages: <a href="https://analyticalmeanderings.github.io/">Impact</a></p>
+  <p>Jazz on Erwinaze shortage: ‘We can’t sell what we don’t have’: <a href="https://analyticalmeanderings.github.io/">Impact</a></p>
+
+  <h3>To learn more, visit our <a href="https://www.usp.org/supply-chain/medicine-supply-map">website</a></h3>
+
+</div>
+
+<div id="Facilities" class="tabcontent">
+  <h2>Facilities</h2>
+  <input type="text" class='table_filter' id="upstream_filter_input" onkeyup="filterTable('upstream_table', 'upstream_filter_input')" placeholder="Search for upstream products.." title="Type in a name">
+  <img src="mapping.png" alt="Location map">
+  <div id='locations'></div>
+  
+
+  <p>Inspiration https://www.kenan-flagler.unc.edu/programs/undergraduate-business/global-programs/ and http://d3.artzub.com/wbca/</p>
+</div>
+
+<div id="Products" class="tabcontent">
+  <h2>Products</h2>
+
+  <input type="text" class='table_filter' id="downstream_filter_input" onkeyup="filterTable('downstream_table', 'downstream_filter_input')" placeholder="Search for downstream products.." title="Type in a name">
+  <div id='products'></div>
+</div>
+
+<div id="KRM Synthesis Routes" class="tabcontent">
+  <h2>KRM Synthesis Routes</h2>
+  <input type="text" class='table_filter' id="downstream_filter_input" onkeyup="filterTable('downstream_table', 'downstream_filter_input')" placeholder="Search for downstream products.." title="Type in a name">
+  <img src="raw_materials.png" alt="materials knowledge graph">
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+  <script type="text/javascript" src="map.js"></script>
+  <div id="map" style="height: 100vh;width: 100vw;"></div>
+  <script src="https://rawgit.com/neo4j-contrib/neoviz.js/master/dist/neovis.js"></script>
+</div>
+
+<div id="Drug Product Risk" class="tabcontent">
+  <h2>Drug Product Risk</h2>
+  <script type="text/javascript" src="map.js"></script>
+  <img src="waterfall.png" alt="waterfall chart for selected product">
+  <div id='risk'></div>
+  
+  <p>#TODO: risk score over time, low pri</p>
+</div>
+
+
+  
+
+
+<div id="Scenario Analysis" class="tabcontent">
+  <h2>Scenario Analysis</h2>
+  <div class="dropdown">
+    <button onclick="myFunction()" class="dropbtn">Filter country</button>
+    <div id="myDropdown" class="dropdown-content">
+      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+      <a href="#about">China</a>
+      <a href="#base">Russia</a>
+      <a href="#blog">India</a>
+      <a href="#contact">United States</a>
+      <a href="#custom">Germany</a>
+      <a href="#support">France</a>
+      <a href="#tools">Spain</a>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button onclick="myFunction()" class="dropbtn">Filter product</button>
+    <div id="myDropdown" class="dropdown-content">
+      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+      <a href="#about">Crude Oil</a>
+      <a href="#base">Diesel</a>
+      <a href="#blog">Gasoline</a>
+      <a href="#contact">Jet Fuel</a>
+      <a href="#custom">Lubes</a>
+    </div>
+  </div>
+ 
+  <div class="dropdown">
+    <button onclick="myFunction()" class="dropbtn">Filter manufacturing type</button>
+    <div id="myDropdown" class="dropdown-content">
+      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+      <a href="#about">Both</a>
+      <a href="#base">Upstream</a>
+      <a href="#blog">Downstream</a>
+    </div>
+  </div>
+  <img src="map.png" alt="Location map">
+
+  <h2>Modeling product flows between upstream and downstream manufacturing locations (aggregated for all sites)</h2>
+  <!-- TODO: Mrinal, this is where the sankey is -->
+  <div id="sankey_basic"></div>
+  <div id='scenario'></div>
+  <p>#TODO: click to table option</p>
+  <p>#TODO: model map after https://www.kenan-flagler.unc.edu/programs/undergraduate-business/global-programs/</p>
+</div>
+
+<div id="Alerts" class="tabcontent">
+    <h2>Alerts</h2>
+    <div class="marquee" id='alert_content'>
+      <!-- <p>Exxon halts output at U.S. drug plant after FDA flags concerns (Washington Post, October 15th, 2021)                       As pharmacies face staff shortages, patients needing medication are left to scramble (Le Monde, October 11th, 2021)                           Bristol Myers reports shortage of chemo drug abraxane; Sartorius more than doubles capacity with Michigan expansion (NYT, October 8th, 2021)</p> -->
+    </div>
+    <p>#TODO: requires real time scraping (e.g., weather events, increased demand due to a pandemic, export bans)</p>
+</div>
 </body>
- 
-</html>
+</html> 
