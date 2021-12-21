@@ -15,8 +15,8 @@
 
 <div class="tab">
   <button class="tablinks" onclick="openTab(event, 'Home')">Home</button>
-  <button class="tablinks" onclick="openTab(event, 'Facilities')">Facilities</button>
-  <button class="tablinks" onclick="openTab(event, 'Products')">Products</button>
+  <button class="tablinks" onclick="openTab(event, 'Model Selection')">Model Selection</button>
+  <button class="tablinks" onclick="openTab(event, 'Feature Selection')">Feature Selection</button>
   <button class="tablinks" onclick="openTab(event, 'Drug Product Risk')">Drug Product Risk</button>
   <button class="tablinks" onclick="openTab(event, 'KRM Synthesis Routes')">KRM Synthesis Routes</button>
   <button class="tablinks" onclick="openTab(event, 'Scenario Analysis')">Scenario Analysis</button>
@@ -38,8 +38,8 @@
 
 </div>
 
-<div id="Facilities" class="tabcontent">
-  <h2>Facilities</h2>
+<div id="Model Selection" class="tabcontent">
+  <h2>Model Selection</h2>
   <input type="text" class='table_filter' id="upstream_filter_input" onkeyup="filterTable('upstream_table', 'upstream_filter_input')" placeholder="Search for upstream products.." title="Type in a name">
   <img src="mapping.png" alt="Location map">
   <div id='locations'></div>
@@ -48,8 +48,8 @@
   <p>Inspiration https://www.kenan-flagler.unc.edu/programs/undergraduate-business/global-programs/ and http://d3.artzub.com/wbca/</p>
 </div>
 
-<div id="Products" class="tabcontent">
-  <h2>Products</h2>
+<div id="Feature Selection" class="tabcontent">
+  <h2>Feature Selection</h2>
 
   <input type="text" class='table_filter' id="downstream_filter_input" onkeyup="filterTable('downstream_table', 'downstream_filter_input')" placeholder="Search for downstream products.." title="Type in a name">
   <div id='products'></div>
