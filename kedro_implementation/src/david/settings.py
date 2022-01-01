@@ -26,26 +26,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Project pipelines."""
-from typing import Dict
+"""Project settings."""
+from david.hooks import ProjectHooks
 
-from kedro.pipeline import Pipeline
+# Instantiate and list your project hooks here
+HOOKS = (ProjectHooks(),)
 
-from test_project.pipelines import data_processing as dp
-from test_project.pipelines import data_visuals as dv
+# List the installed plugins for which to disable auto-registry
+# DISABLE_HOOKS_FOR_PLUGINS = ("kedro-viz",)
 
+# Define where to store data from a KedroSession. Defaults to BaseSessionStore.
+# from kedro.framework.session.store import ShelveStore
+# SESSION_STORE_CLASS = ShelveStore
 
-def register_pipelines() -> Dict[str, Pipeline]:
-    """Register the project's pipelines.
+# Define keyword arguments to be passed to `SESSION_STORE_CLASS` constructor
+# SESSION_STORE_ARGS = {
+#     "path": "./sessions"
+# }
 
-    Returns:
-        A mapping from a pipeline name to a ``Pipeline`` object.
-    """
-    #data_processing_pipeline = dp.create_pipeline()
-    data_visuals_pipeline = dv.create_pipeline()
-    return {
-        # "__default__": data_processing_pipeline,
-        # "dp": data_processing_pipeline
-        "__default__": data_visuals_pipeline,
-        "dp": data_visuals_pipeline
-    }
+# Define custom context class. Defaults to `KedroContext`
+# CONTEXT_CLASS = KedroContext
+
+# Define the configuration folder. Defaults to `conf`
+# CONF_ROOT = "conf"

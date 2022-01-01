@@ -25,41 +25,50 @@
 #
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""Test Project file for ensuring the package is executable
+as `david` and `python -m david`
+"""
+import importlib
+from pathlib import Path
 
-from setuptools import find_packages, setup
-
-entry_point = (
-    "test_project = test_project.__main__:main"
-)
+from kedro.framework.cli.utils import KedroCliError, load_entry_points
+from kedro.framework.project import configure_project
 
 
-# get the dependencies and installs
-with open("requirements.txt", "r", encoding="utf-8") as f:
-    # Make sure we strip all comments and options (e.g "--extra-index-url")
-    # that arise from a modified pip.conf file that configure global options
-    # when running kedro build-reqs
-    requires = []
-    for line in f:
-        req = line.split("#", 1)[0].strip()
-        if req and not req.startswith("--"):
-            requires.append(req)
+def _find_run_command(package_name):
+    try:
+        project_cli = importlib.import_module(f"{package_name}.cli")
+        # fail gracefully if cli.py does not exist
+    except ModuleNotFoundError as exc:
+        if f"{package_name}.cli" not in str(exc):
+            raise
+        plugins = load_entry_points("project")
+        run = _find_run_command_in_plugins(plugins) if plugins else None
+        if run:
+            # use run command from installed plugin if it exists
+            return run
+        # use run command from the framework project
+        from kedro.framework.cli.project import run
 
-setup(
-    name="test_project",
-    version="0.1",
-    packages=find_packages(exclude=["tests"]),
-    entry_points={"console_scripts": [entry_point]},
-    install_requires=requires,
-    extras_require={
-        "docs": [
-            "sphinx~=3.4.3",
-            "sphinx_rtd_theme==0.5.1",
-            "nbsphinx==0.8.1",
-            "nbstripout~=0.4",
-            "recommonmark==0.7.1",
-            "sphinx-autodoc-typehints==1.11.1",
-            "sphinx_copybutton==0.3.1",
-            "ipykernel>=5.3, <7.0",
-        ]
-    },
-)
+        return run
+    # fail badly if cli.py exists, but has no `cli` in it
+    if not hasattr(project_cli, "cli"):
+        raise KedroCliError(f"Cannot load commands from {package_name}.cli")
+    return project_cli.run
+
+
+def _find_run_command_in_plugins(plugins):
+    for group in plugins:
+        if "run" in group.commands:
+            return group.commands["run"]
+
+
+def main():
+    package_name = Path(__file__).parent.name
+    configure_project(package_name)
+    run = _find_run_command(package_name)
+    run()
+
+
+if __name__ == "__main__":
+    main()

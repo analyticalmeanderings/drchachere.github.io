@@ -1,5 +1,5 @@
 [tool.kedro]
-package_name = "test_project"
+package_name = "david"
 project_name = "Test Project"
 project_version = "0.17.5"
 
@@ -14,4 +14,4 @@ known_third_party = "kedro"
 [tool.pytest.ini_options]
 addopts = """
 --cov-report term-missing \
---cov src/test_project -ra"""
+--cov src/david -ra"""
