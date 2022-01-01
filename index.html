@@ -48,7 +48,7 @@
   <div id='locations'></div>
   
 
-  <p>Inspiration https://www.kenan-flagler.unc.edu/programs/undergraduate-business/global-programs/ and http://d3.artzub.com/wbca/</p>
+  <p>Inspiration MY BLOG</p>
 </div>
 
 <div id="Feature Selection" class="tabcontent">
@@ -58,83 +58,6 @@
   <div id='products'></div>
 </div>
 
-<div id="KRM Synthesis Routes" class="tabcontent">
-  <h2>KRM Synthesis Routes</h2>
-  <input type="text" class='table_filter' id="downstream_filter_input" onkeyup="filterTable('downstream_table', 'downstream_filter_input')" placeholder="Search for downstream products.." title="Type in a name">
-  <img src="raw_materials.png" alt="materials knowledge graph">
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-  <script type="text/javascript" src="map.js"></script>
-  <div id="map" style="height: 100vh;width: 100vw;"></div>
-  <script src="https://rawgit.com/neo4j-contrib/neoviz.js/master/dist/neovis.js"></script>
-</div>
-
-<div id="Drug Product Risk" class="tabcontent">
-  <h2>Drug Product Risk</h2>
-  <script type="text/javascript" src="map.js"></script>
-  <img src="waterfall.png" alt="waterfall chart for selected product">
-  <div id='risk'></div>
-  
-  <p>#TODO: risk score over time, low pri</p>
-</div>
-
-
-  
-
-
-<div id="Scenario Analysis" class="tabcontent">
-  <h2>Scenario Analysis</h2>
-  <div class="dropdown">
-    <button onclick="myFunction()" class="dropbtn">Filter country</button>
-    <div id="myDropdown" class="dropdown-content">
-      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-      <a href="#about">China</a>
-      <a href="#base">Russia</a>
-      <a href="#blog">India</a>
-      <a href="#contact">United States</a>
-      <a href="#custom">Germany</a>
-      <a href="#support">France</a>
-      <a href="#tools">Spain</a>
-    </div>
-  </div>
-
-  <div class="dropdown">
-    <button onclick="myFunction()" class="dropbtn">Filter product</button>
-    <div id="myDropdown" class="dropdown-content">
-      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-      <a href="#about">Crude Oil</a>
-      <a href="#base">Diesel</a>
-      <a href="#blog">Gasoline</a>
-      <a href="#contact">Jet Fuel</a>
-      <a href="#custom">Lubes</a>
-    </div>
-  </div>
- 
-  <div class="dropdown">
-    <button onclick="myFunction()" class="dropbtn">Filter manufacturing type</button>
-    <div id="myDropdown" class="dropdown-content">
-      <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-      <a href="#about">Both</a>
-      <a href="#base">Upstream</a>
-      <a href="#blog">Downstream</a>
-    </div>
-  </div>
-  <img src="map.png" alt="Location map">
-
-  <h2>Modeling product flows between upstream and downstream manufacturing locations (aggregated for all sites)</h2>
-  <!-- TODO: Mrinal, this is where the sankey is -->
-  <div id="sankey_basic"></div>
-  <div id='scenario'></div>
-  <p>#TODO: click to table option</p>
-  <p>#TODO: model map after https://www.kenan-flagler.unc.edu/programs/undergraduate-business/global-programs/</p>
-</div>
-
-<div id="Alerts" class="tabcontent">
-    <h2>Alerts</h2>
-    <div class="marquee" id='alert_content'>
-      <!-- <p>Exxon halts output at U.S. drug plant after FDA flags concerns (Washington Post, October 15th, 2021)                       As pharmacies face staff shortages, patients needing medication are left to scramble (Le Monde, October 11th, 2021)                           Bristol Myers reports shortage of chemo drug abraxane; Sartorius more than doubles capacity with Michigan expansion (NYT, October 8th, 2021)</p> -->
-    </div>
-    <p>#TODO: requires real time scraping (e.g., weather events, increased demand due to a pandemic, export bans)</p>
-</div>
 </div>
 </body>
 </html> 
