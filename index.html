@@ -49,7 +49,6 @@
 
             <h3>Recent alerts</h3>
 
-
             <h3>
               To learn more, visit our
               <a href="https://www.usp.org/supply-chain/medicine-supply-map"
@@ -79,9 +78,31 @@
             <h2>Feature Selection</h2>
             <ol class="list-group list-group-numbered">
               <li class="list-group-item list-group-item-action">First item</li>
-              <li class="list-group-item list-group-item-action">Second item</li>
+              <li class="list-group-item list-group-item-action">
+                Second item
+              </li>
               <li class="list-group-item list-group-item-action">Third item</li>
             </ol>
+            <!-- TODO: move to a module-->
+            <script>
+              const dbParam = JSON.stringify({ table: "customers", limit: 20 });
+              const xmlhttp = new XMLHttpRequest();
+              xmlhttp.onload = function () {
+                const myObj = JSON.parse(this.responseText);
+                let text = "<table border='1'>";
+                for (let x in myObj) {
+                  text += "<tr><td>" + myObj[x].name + "</td></tr>";
+                }
+                text += "</table>";
+                document.getElementById("demo").innerHTML = text;
+              };
+              xmlhttp.open("POST", "json_demo_html_table.php");
+              xmlhttp.setRequestHeader(
+                "Content-type",
+                "application/x-www-form-urlencoded"
+              );
+              xmlhttp.send("x=" + dbParam);
+            </script>
 
             <input
               type="text"

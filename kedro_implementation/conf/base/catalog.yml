@@ -10,3 +10,7 @@ train:
 test:
   type: pandas.CSVDataSet
   filepath: data/01_raw/test.csv
+
+feature_information:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/test.csv

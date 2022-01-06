@@ -10,7 +10,7 @@ def create_pipeline(**kwargs):
             node(
                 func=add_features_o,
                 inputs="train",
-                outputs=["train_with_features", "name_avg_price_dict", "name_med_price_dict"],
+                outputs=["train_with_features"],
                 name="add_features_o_node",
             ),
         ]
