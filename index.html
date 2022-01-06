@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <!-- TODO: David, update the following three elements -->
-    <meta name="keywords" content="Data Science, Real Estate Analytics" />
-    <meta name="description" content="Building a portfolio" />
-    <meta name="author" content="David" />
+    <meta name="keywords" content="Medicine Supply Map, USP" />
+    <meta name="description" content="That;s a food thing" />
+    <meta name="author" content="Matt Christian" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF8" />
@@ -16,11 +16,14 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="./script.js"></script>
     <link rel="stylesheet" href="./styles.css" type="text/css" />
   </head>
   <body>
-    <div class="container-fluid p-3 my-2">
-      <h1>David's Data Science Portfolio</h1>
+    <div class="container-fluid pt-3 m-1">
+      <h1 class="mb-4">
+        David's Data Science Portfolio
+      </h1>
 
       <!-- Nav tabs -->
       <ul class="nav nav-tabs shadow sticky-top">
@@ -37,65 +40,67 @@
             >Feature Selection</a
           >
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#menu3"
+            >Blog 1</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#menu4"
+            >Blog 2</a
+          >
+        </li>
       </ul>
 
       <!-- Tab panes -->
       <div class="tab-content">
-        <div class="tab-pane container fade" id="home">
-          <div id="Home" class="tabcontent">
-            <h2>Home</h2>
+        <div class="tab-pane container-fluid fade" id="home">
+          <h2>Home</h2>
 
-            <div id="top10_list"></div>
-
-            <h3>Recent alerts</h3>
-
-            <h3>
-              To learn more, visit our
-              <a href="https://www.usp.org/supply-chain/medicine-supply-map"
-                >website</a
-              >
-            </h3>
-          </div>
+          <h3>
+            To learn more, visit our
+            <a href="https://www.usp.org/supply-chain/medicine-supply-map"
+              >website</a
+            >
+          </h3>
         </div>
-        <div class="tab-pane container fade" id="menu1">
-          <div id="Model Selection" class="tabcontent">
-            <h2>Model Selection</h2>
-            <div id="locations"></div>
+        <div class="tab-pane container-fluid fade" id="menu1">
+          <h2>Model Selection</h2>
+          <div id="locations"></div>
 
-            <p>Inspiration MY BLOG</p>
-          </div>
+          <p>Inspiration MY BLOG</p>
         </div>
-        <div class="tab-pane container fade" id="menu2">
-          <div id="Feature Selection" class="tabcontent">
-            <h2>Feature Selection</h2>
-            <ol class="list-group list-group-numbered">
-              <li class="list-group-item list-group-item-action">First item</li>
-              <li class="list-group-item list-group-item-action">
-                Second item
-              </li>
-              <li class="list-group-item list-group-item-action">Third item</li>
-            </ol>
-            <!-- TODO: move to a module-->
-            <!-- <script>
-              const dbParam = JSON.stringify({ table: "customers", limit: 20 });
-              const xmlhttp = new XMLHttpRequest();
-              xmlhttp.onload = function () {
-                const myObj = JSON.parse(this.responseText);
-                let text = "<table border='1'>";
-                for (let x in myObj) {
-                  text += "<tr><td>" + myObj[x].name + "</td></tr>";
-                }
-                text += "</table>";
-                document.getElementById("demo").innerHTML = text;
-              };
-              xmlhttp.open("POST", "json_demo_html_table.php");
-              xmlhttp.setRequestHeader(
-                "Content-type",
-                "application/x-www-form-urlencoded"
-              );
-              xmlhttp.send("x=" + dbParam);
-            </script> -->
-          </div>
+        <div class="tab-pane container-fluid fade" id="menu2">
+          <h2>Feature Selection</h2>
+          <ol class="list-group list-group-numbered">
+            <li class="list-group-item list-group-item-action">First item</li>
+            <li class="list-group-item list-group-item-action">Second item</li>
+            <li class="list-group-item list-group-item-action">Third item</li>
+          </ol>
+
+          <div id="shortage_model"></div>
+        </div>
+
+        <div class="tab-pane container-fluid fade" id="menu3">
+          <h2>Blog 1</h2>
+          <h3>
+            To learn more, visit our
+            <a href="https://www.usp.org/supply-chain/medicine-supply-map"
+              >website</a
+            >
+          </h3>
+        </div>
+
+        <div class="tab-pane container-fluid fade" id="menu4">
+          <h2>Blog 2</h2>
+
+          <h3>
+            To learn more, visit our
+            <a href="https://www.usp.org/supply-chain/medicine-supply-map"
+              >website</a
+            >
+          </h3>
         </div>
       </div>
     </div>

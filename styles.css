@@ -1,72 +1,11 @@
-/* Style the tab */
-/* TODO: make sticky */
-.tab {
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-
+.container {
+    margin-left: 0;
+    padding-left: 0;
 }
 
-/* Style the buttons inside the tab */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
-}
-
-/* Create an active/current tablink class */
-.tab button.active, .tab button:hover{
-  background-color: #ddd;
-}
-
-/* Style the tab content */
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  -webkit-animation: fadeEffect 1s;
-  animation: fadeEffect 1s;
-}
-
-/* Fade in tabs */
-/* TODO: Always define standard rule '@keyframes' when defining keyframes.css(vendorPrefix) */
-@-webkit-keyframes fadeEffect {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-
-/* TODO: maybe scroll sideways like https://globus-it.ru/#/ */
-@-moz-keyframes scroll-left {
-  0% {
-      -moz-transform: translateX(100%);
-  }
-  100% {
-      -moz-transform: translateX(-100%);
-  }
-}
-
-@-webkit-keyframes scroll-left {
-  0% {
-      -webkit-transform: translateX(100%);
-  }
-  100% {
-      -webkit-transform: translateX(-100%);
-  }
-}
-
-@keyframes scroll-left {
-  0% {
-      -moz-transform: translateX(100%);
-      -webkit-transform: translateX(100%);
-      transform: translateX(100%);
-  }
-  100% {
-      -moz-transform: translateX(-100%);
-      -webkit-transform: translateX(-100%);
-      transform: translateX(-100%);
-  }
+.container-fluid {
+    margin-left: 10px;
+    padding-left: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
 }
