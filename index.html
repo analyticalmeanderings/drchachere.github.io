@@ -68,73 +68,7 @@
       </ul>
 
       <!-- Tab panes -->
-      <div class="tab-content">
-        <div class="tab-pane container-fluid fade" id="home">
-          <h2>Home</h2>
 
-          <h3>
-            To learn more, visit our
-            <a href="https://www.usp.org/supply-chain/medicine-supply-map"
-              >website</a
-            >
-          </h3>
-        </div>
-        <div class="tab-pane container-fluid fade" id="menu1">
-          <h2>Model Selection</h2>
-          <div id="locations"></div>
-
-<head>
-  <!-- TODO: David, update the following three elements -->
-  <meta name="keywords" content="Medicine Supply Map, USP" />
-  <meta name="description" content="That;s a food thing" />
-  <meta name="author" content="Matt Christian" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="content-type" content="text/html; charset=UTF8" />
-  <!-- Latest compiled and minified CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- Latest compiled JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="./script.js"></script>
-  <link rel="stylesheet" href="./styles.css" type="text/css" />
-</head>
-
-<body>
-  <div class="container-fluid pt-3 m-1">
-    <h1 class="mb-4">
-      Blogpost Ideas
-    </h1>
-
-    <!-- Nav tabs -->
-    <ul class="nav nav-tabs shadow sticky-top">
-      <li class="nav-item">
-        <a class="nav-link active" data-bs-toggle="tab" href="#home">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#menu1">Model Selection</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#menu2">Feature Selection</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#menu3">Blog Post: Defining Essential</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#menu4">Blog Post: Availability of Public Pricing Data</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#menu5">Blog Post: The Price You Pay</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#menu6">Blog Post: What's Not Printed?</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#menu7">Blog Post: Recalls and Refusals</a>
-      </li>
-    </ul>
-
-    <!-- Tab panes -->
     <div class="tab-content">
       <div class="tab-pane container-fluid fade" id="home">
         <h2>Home</h2>
@@ -150,6 +84,7 @@
 
         <p>Zhengrong says baseline against logistic regression, always aim to beat the baseline </p>
       </div>
+
       <div class="tab-pane container-fluid fade" id="menu2">
         <h2>Feature Selection</h2>
         <ol class="list-group list-group-numbered">
@@ -177,11 +112,14 @@
         <h2>Blog Post: Availability of Public Pricing Data</h2>
         <div id="venn"></div>
 
-        <h3>
-          We will need a broader understanding of pricing - e.g., NADAC vs. Part B vs. Part D. What are they? How do
-          they differ from the wholesale acquisition price, the GPO negotiated price etc.? We should partner with GEA
-          colleagues on this one. They can provide that context, potentially
-        </h3>
+        <p>
+          Three publically avaliable datasets provide pricing information on more than 42% of drug products sold in the United States.
+
+          1) National Average Drug Acquisition Cost (NADAC). Based on a weekly survey of pharmaceciesin the US, this dataset 
+          
+          "Although AWP (Average Wholesale Price) represents a published price for the drug based on data from manufacturers, distributors, and other suppliers, NADAC reflects monthly purchasing trends across participating retail pharmacies in the United States."
+
+        </p>
         <style>
           .venntooltip {
             position: absolute;
@@ -201,7 +139,6 @@
         <script src="./venn/venn.min.js"></script>
         <script src="./lastfm.jsonp"></script>
 
-<<<<<<< HEAD
         <script>
 
           var chart = venn.VennDiagram()
@@ -247,45 +184,17 @@
                 .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
                 .style("stroke-opacity", 0);
             })
-            .on("click", function (d, i) {
-              if (d.sets.length!=2) {
-                var toast = new bootstrap.Toast(
-                  document.getElementById("livetoast")
-                )
-                toast.show()
-              }
-              console.log(d)
-              console.log(i)
-=======
-        <div class="tab-pane container-fluid fade" id="menu4">
-          <h2>Blog Post: Mining the Public Pricing Data</h2>
-          <div id="venn"></div>
-
-          <p>
-            Three publically avaliable datasets provide pricing information for over 42% of all perscription drugs on the US market.
-
-            1) Part B - 
-            2) Part D
-            3) NADAC
-
-          </p>
-          <style>
-            .venntooltip {
-              position: absolute;
-              text-align: center;
-              width: 128px;
-              height: 16px;
-              background: #333;
-              color: #ddd;
-              padding: 2px;
-              border: 0px;
-              border-radius: 8px;
-              opacity: 0;
->>>>>>> 3eeb1eff9c645ff704e8b13512b93a934520759d
-            }
-            )
-
-
+            // .on("click", function (d, i) {
+            //   if (d.sets.length!=2) {
+            //     var toast = new bootstrap.Toast(
+            //       document.getElementById("livetoast")
+            //     )
+            //     toast.show()
+            //   }
+            //   console.log(d)
+            //   console.log(i)
+            // }
+            // )
             ;
         </script>
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
@@ -301,6 +210,7 @@
         </div>
 
       </div>
+
       <div class="tab-pane container-fluid fade" id="menu5">
         <h2>Blog Post: The Price You Pay</h2>
 
