@@ -1,10 +1,8 @@
-// From benfred
-
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('d3-selection'), require('d3-transition')) :
     typeof define === 'function' && define.amd ? define(['exports', 'd3-selection', 'd3-transition'], factory) :
-    (factory((global.venn = {}),global.d3,global.d3));
-}(this, (function (exports,d3Selection,d3Transition) { 'use strict';
+    (factory((global.venn = global.venn || {}),global.d3,global.d3));
+}(this, function (exports,d3Selection,d3Transition) { 'use strict';
 
     var SMALL = 1e-10;
 
@@ -67,12 +65,6 @@
                                 x : circle.x + circle.radius * Math.sin(a),
                                 y : circle.y + circle.radius * Math.cos(a)
                             });
-
-                        // clamp the width to the largest is can actually be
-                        // (sometimes slightly overflows because of FP errors)
-                        if (width > circle.radius * 2) {
-                            width = circle.radius * 2;
-                        }
 
                         // pick the circle whose arc has the smallest width
                         if ((arc === null) || (arc.width > width)) {
@@ -162,9 +154,14 @@
         return ret;
     }
 
-    /** Circular segment area calculation. See http://mathworld.wolfram.com/CircularSegment.html */
+    function circleIntegral(r, x) {
+        var y = Math.sqrt(r * r - x * x);
+        return x * y + r * r * Math.atan2(x, y);
+    }
+
+    /** Returns the area of a circle of radius r - up to width */
     function circleArea(r, width) {
-        return r * r * Math.acos(1 - width/r) - (r - width) * Math.sqrt(width * (2 * r - width));
+        return circleIntegral(r, width - r) - circleIntegral(r, -r);
     }
 
     /** euclidean distance between two points */
@@ -574,13 +571,12 @@
         parameters = parameters || {};
         parameters.maxIterations = parameters.maxIterations || 500;
         var initialLayout = parameters.initialLayout || bestInitialLayout;
-        var loss = parameters.lossFunction || lossFunction;
 
         // add in missing pairwise areas as having 0 size
         areas = addMissingAreas(areas);
 
         // initial layout is done greedily
-        var circles = initialLayout(areas, parameters);
+        var circles = initialLayout(areas);
 
         // transform x/y coordinates to a vector to optimize
         var initial = [], setids = [], setid;
@@ -591,8 +587,12 @@
                 setids.push(setid);
             }
         }
+
+        // optimize initial layout from our loss function
+        var totalFunctionCalls = 0;
         var solution = nelderMead(
             function(values) {
+                totalFunctionCalls += 1;
                 var current = {};
                 for (var i = 0; i < setids.length; ++i) {
                     var setid = setids[i];
@@ -602,7 +602,7 @@
                                      // size : circles[setid].size
                                      };
                 }
-                return loss(current, areas);
+                return lossFunction(current, areas);
             },
             initial,
             parameters);
@@ -628,8 +628,8 @@
             return Math.abs(r1 - r2);
         }
 
-        return bisect(function(distance$$1) {
-            return circleOverlap(r1, r2, distance$$1) - overlap;
+        return bisect(function(distance) {
+            return circleOverlap(r1, r2, distance) - overlap;
         }, 0, r1 + r2);
     }
 
@@ -683,9 +683,9 @@
                 right = setids[current.sets[1]],
                 r1 = Math.sqrt(sets[left].size / Math.PI),
                 r2 = Math.sqrt(sets[right].size / Math.PI),
-                distance$$1 = distanceFromIntersectArea(r1, r2, current.size);
+                distance = distanceFromIntersectArea(r1, r2, current.size);
 
-            distances[left][right] = distances[right][left] = distance$$1;
+            distances[left][right] = distances[right][left] = distance;
 
             // also update constraints to indicate if its a subset or disjoint
             // relationship
@@ -717,11 +717,11 @@
                     constraint = constraints[i][j];
 
                 var squaredDistance = (xj - xi) * (xj - xi) + (yj - yi) * (yj - yi),
-                    distance$$1 = Math.sqrt(squaredDistance),
+                    distance = Math.sqrt(squaredDistance),
                     delta = squaredDistance - dij * dij;
 
-                if (((constraint > 0) && (distance$$1 <= dij)) ||
-                    ((constraint < 0) && (distance$$1 >= dij))) {
+                if (((constraint > 0) && (distance <= dij)) ||
+                    ((constraint < 0) && (distance >= dij))) {
                     continue;
                 }
 
@@ -740,7 +740,6 @@
     /// takes the best working variant of either constrained MDS or greedy
     function bestInitialLayout(areas, params) {
         var initial = greedyLayout(areas, params);
-        var loss = params.lossFunction || lossFunction;
 
         // greedylayout is sufficient for all 2/3 circle cases. try out
         // constrained MDS for higher order problems, take its output
@@ -748,8 +747,8 @@
         // since it axis aligns)
         if (areas.length >= 8) {
             var constrained  = constrainedMDSLayout(areas, params),
-                constrainedLoss = loss(constrained, areas),
-                greedyLoss = loss(initial, areas);
+                constrainedLoss = lossFunction(constrained, areas),
+                greedyLoss = lossFunction(initial, areas);
 
             if (constrainedLoss + 1e-8 < greedyLoss) {
                 initial = constrained;
@@ -820,8 +819,7 @@
     /** Lays out a Venn diagram greedily, going from most overlapped sets to
     least overlapped, attempting to position each new set such that the
     overlapping areas to already positioned sets are basically right */
-    function greedyLayout(areas, params) {
-        var loss = params && params.lossFunction ? params.lossFunction : lossFunction;
+    function greedyLayout(areas) {
         // define a circle for each set
         var circles = {}, setOverlaps = {}, set;
         for (var i = 0; i < areas.length; ++i) {
@@ -938,9 +936,9 @@
             for (j = 0; j < points.length; ++j) {
                 circles[setIndex].x = points[j].x;
                 circles[setIndex].y = points[j].y;
-                var localLoss = loss(circles, areas);
-                if (localLoss < bestLoss) {
-                    bestLoss = localLoss;
+                var loss = lossFunction(circles, areas);
+                if (loss < bestLoss) {
+                    bestLoss = loss;
                     bestPoint = points[j];
                 }
             }
@@ -998,16 +996,6 @@
             for (i = 0; i < circles.length; ++i) {
                 circles[i].x -= largestX;
                 circles[i].y -= largestY;
-            }
-        }
-
-        if (circles.length == 2) {
-            // if the second circle is a subset of the first, arrange so that
-            // it is off to one side. hack for https://github.com/benfred/venn.js/issues/120
-            var dist = distance(circles[0], circles[1]);
-            if (dist < Math.abs(circles[1].radius - circles[0].radius)) {
-                circles[1].x = circles[0].x + circles[0].radius - circles[1].radius - 1e-10;
-                circles[1].y = circles[0].y;
             }
         }
 
@@ -1208,15 +1196,8 @@
 
         var bounds = getBoundingBox(circles),
             xRange = bounds.xRange,
-            yRange = bounds.yRange;
-
-        if ((xRange.max == xRange.min) ||
-            (yRange.max == yRange.min)) {
-            console.log("not scaling solution: zero size detected");
-            return solution;
-        }
-
-        var xScaling = width  / (xRange.max - xRange.min),
+            yRange = bounds.yRange,
+            xScaling = width  / (xRange.max - xRange.min),
             yScaling = height / (yRange.max - yRange.min),
             scaling = Math.min(yScaling, xScaling),
 
@@ -1271,57 +1252,18 @@
                 }
                 return ret;
             },
-            layoutFunction = venn,
-            loss = lossFunction;
-
+            layoutFunction = venn;
 
         function chart(selection) {
             var data = selection.datum();
-
-            // handle 0-sized sets by removing from input
-            var toremove = {};
-            data.forEach(function(datum) {
-                if ((datum.size == 0) && datum.sets.length == 1) {
-                    toremove[datum.sets[0]] = 1;
-                }
-            });
-            data = data.filter(function(datum) {
-                return !datum.sets.some(function(set) { return set in toremove; });
-            });
-
-            var circles = {};
-            var textCentres = {};
-
-            if (data.length > 0) {
-                var solution = layoutFunction(data, {lossFunction: loss});
-
-                if (normalize) {
-                    solution = normalizeSolution(solution,
-                                                orientation,
-                                                orientationOrder);
-                }
-
-                circles = scaleSolution(solution, width, height, padding);
-                textCentres = computeTextCentres(circles, data);
+            var solution = layoutFunction(data);
+            if (normalize) {
+                solution = normalizeSolution(solution,
+                                             orientation,
+                                             orientationOrder);
             }
-
-            // Figure out the current label for each set. These can change
-            // and D3 won't necessarily update (fixes https://github.com/benfred/venn.js/issues/103)
-            var labels = {};
-            data.forEach(function(datum) {
-                if (datum.label) {
-                    labels[datum.sets] = datum.label;
-                }
-            });
-
-            function label(d) {
-                if (d.sets in labels) {
-                    return labels[d.sets];
-                }
-                if (d.sets.length == 1) {
-                    return '' + d.sets[0];
-                }
-            }
+            var circles = scaleSolution(solution, width, height, padding);
+            var textCentres = computeTextCentres(circles, data);
 
             // create svg if not already existing
             selection.selectAll("svg").data([circles]).enter().append("svg");
@@ -1390,11 +1332,11 @@
             if (styled) {
                 enterPath.style("fill-opacity", "0")
                     .filter(function (d) { return d.sets.length == 1; } )
-                    .style("fill", function(d) { return colours(d.sets); })
+                    .style("fill", function(d) { return colours(label(d)); })
                     .style("fill-opacity", ".25");
 
                 enterText
-                    .style("fill", function(d) { return d.sets.length == 1 ? colours(d.sets) : "#444"; });
+                    .style("fill", function(d) { return d.sets.length == 1 ? colours(label(d)) : "#444"; });
             }
 
             // update existing, using pathTween if necessary
@@ -1454,6 +1396,15 @@
                     'enter': enter,
                     'update': update,
                     'exit': exit};
+        }
+
+        function label(d) {
+            if (d.label) {
+                return d.label;
+            }
+            if (d.sets.length == 1) {
+                return '' + d.sets[0];
+            }
         }
 
         chart.wrap = function(_) {
@@ -1526,12 +1477,6 @@
             if (!arguments.length) return orientationOrder;
             orientationOrder = _;
             return chart;
-        };
-
-        chart.lossFunction = function(_) {
-          if (!arguments.length) return loss;
-          loss = _;
-          return chart;
         };
 
         return chart;
@@ -1840,6 +1785,7 @@
     exports.circleOverlap = circleOverlap;
     exports.circleArea = circleArea;
     exports.distance = distance;
+    exports.circleIntegral = circleIntegral;
     exports.venn = venn;
     exports.greedyLayout = greedyLayout;
     exports.scaleSolution = scaleSolution;
@@ -1859,4 +1805,4 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
