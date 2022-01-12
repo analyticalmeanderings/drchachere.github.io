@@ -21,9 +21,7 @@
   </head>
   <body>
     <div class="container-fluid pt-3 m-1">
-      <h1 class="mb-4">
-        Blogpost Ideas
-      </h1>
+      <h1 class="mb-4">Blogpost Ideas</h1>
 
       <!-- Nav tabs -->
       <ul class="nav nav-tabs shadow sticky-top">
@@ -69,126 +67,152 @@
 
       <!-- Tab panes -->
 
-    <div class="tab-content">
-      <div class="tab-pane container-fluid fade" id="home">
-        <h2>Home</h2>
+      <div class="tab-content">
+        <div class="tab-pane container-fluid fade" id="home">
+          <h2>Home</h2>
 
-        <h3>
-          To learn more, visit our
-          <a href="https://www.usp.org/supply-chain/medicine-supply-map">website</a>
-        </h3>
-      </div>
-      <div class="tab-pane container-fluid fade" id="menu1">
-        <h2>Model Selection</h2>
-        <div id="locations"></div>
+          <h3>
+            To learn more, visit our
+            <a href="https://www.usp.org/supply-chain/medicine-supply-map"
+              >website</a
+            >
+          </h3>
+        </div>
+        <div class="tab-pane container-fluid fade" id="menu1">
+          <h2>Model Selection</h2>
+          <div id="locations"></div>
 
-        <p>Zhengrong says baseline against logistic regression, always aim to beat the baseline </p>
-      </div>
+          <p>
+            Zhengrong says baseline against logistic regression, always aim to
+            beat the baseline
+          </p>
+        </div>
 
-      <div class="tab-pane container-fluid fade" id="menu2">
-        <h2>Feature Selection</h2>
-        <ol class="list-group list-group-numbered">
-          <li class="list-group-item list-group-item-action">Feature 1</li>
-          <li class="list-group-item list-group-item-action">Feature 2</li>
-          <li class="list-group-item list-group-item-action">Dosage Form</li>
-        </ol>
+        <div class="tab-pane container-fluid fade" id="menu2">
+          <h2>Feature Selection</h2>
+          <ol class="list-group list-group-numbered">
+            <li class="list-group-item list-group-item-action">Feature 1</li>
+            <li class="list-group-item list-group-item-action">Feature 2</li>
+            <li class="list-group-item list-group-item-action">Dosage Form</li>
+          </ol>
 
-        <p>Dosage form shouldn't be used</p>
-      </div>
+          <p>Dosage form shouldn't be used</p>
+        </div>
 
-      <div class="tab-pane container-fluid fade" id="menu3">
-        <h2>Blog Post: Defining Essential</h2>
-        <p>COVID-19 forced everyone to soul search on the definition of essential.
-          Is this business trip essential?
-          Is visiting my family essential?
-          We even defined "essential workers".
-          Medicines are no different.
-          Everyone in the healthcare community has an essential medicines list.
-          How do they all compare?
-        </p>
-      </div>
+        <div class="tab-pane container-fluid fade" id="menu3">
+          <h2>Blog Post: Defining Essential</h2>
+          <p>
+            COVID-19 forced everyone to soul search on the definition of
+            essential. Is this business trip essential? Is visiting my family
+            essential? We even defined "essential workers". Medicines are no
+            different. Everyone in the healthcare community has an essential
+            medicines list. How do they all compare?
+          </p>
+        </div>
 
-      <div class="tab-pane container-fluid fade" id="menu4">
-        <h2>Blog Post: Mining the Public Pricing Data</h2>
-        <div id="venn"></div>
+        <div class="tab-pane container-fluid fade" id="menu4">
+          <h2>Blog Post: Mining the Public Pricing Data</h2>
+          <div id="venn"></div>
 
-        <p>
-          Three publicly available datasets provide pricing information on more than 42% of drug products sold in the United States.
-          <br>
-          1) National Average Drug Acquisition Cost (NADAC). Based on a weekly survey of pharmacies, this dataset covers over 29% of all drug products sold in the United States.
-          While AWP (Average Wholesale Price) represents a published price for the drug based on data from manufacturers, NADAC reflects actual monthly purchasing trends from transacted data.
-          <br>
-          2) Medicare Part B. The smallest of the three datasets covers certain outpatient medications.
-          <br>
-          3) Medicare Part D. This dataset is focused on prescription drugs and has substantial overlap with the NADAC data.
-          <br><br>
-          To learn more about how drug pricing impacts shortage risk, please visit our <a href="https://www.usp.org/supply-chain/medicine-supply-map">website</a>
+          <p>
+            Three publicly available datasets provide pricing information on
+            more than 42% of drug products sold in the United States.
+            <br />
+            1) National Average Drug Acquisition Cost (NADAC). Based on a weekly
+            survey of pharmacies, this dataset covers over 29% of all drug
+            products sold in the United States. While AWP (Average Wholesale
+            Price) represents a published price for the drug based on data from
+            manufacturers, NADAC reflects actual monthly purchasing trends from
+            transacted data.
+            <br />
+            2) Medicare Part B. The smallest of the three datasets covers
+            certain outpatient medications.
+            <br />
+            3) Medicare Part D. This dataset is focused on prescription drugs
+            and has substantial overlap with the NADAC data.
+            <br /><br />
+            To learn more about how drug pricing impacts shortage risk, please
+            visit our
+            <a href="https://www.usp.org/supply-chain/medicine-supply-map"
+              >website</a
+            >
+          </p>
+          <style>
+            .venntooltip {
+              position: absolute;
+              text-align: center;
+              width: 150px;
+              height: 2rem;
+              background: #333;
+              color: #ddd;
+              padding: 2px;
+              border: 0px;
+              border-radius: 8px;
+              opacity: 0;
+            }
+          </style>
 
-        </p>
-        <style>
-          .venntooltip {
-            position: absolute;
-            text-align: center;
-            width: 150px;
-            height: 2rem;
-            background: #333;
-            color: #ddd;
-            padding: 2px;
-            border: 0px;
-            border-radius: 8px;
-            opacity: 0;
-          }
-        </style>
+          <script src="https://d3js.org/d3.v4.min.js"></script>
+          <script src="./venn/venn.min.js"></script>
+          <script src="./lastfm.jsonp"></script>
 
-        <script src="https://d3js.org/d3.v4.min.js"></script>
-        <script src="./venn/venn.min.js"></script>
-        <script src="./lastfm.jsonp"></script>
+          <script>
+            var chart = venn.VennDiagram().width(500).height(500);
 
-        <script>
+            var div = d3.select("#venn");
+            div.datum(sets).call(chart);
 
-          var chart = venn.VennDiagram()
-            .width(500)
-            .height(500);
+            var tooltip = d3
+              .select("body")
+              .append("div")
+              .attr("class", "venntooltip");
 
-          var div = d3.select("#venn")
-          div.datum(sets).call(chart);
+            div
+              .selectAll("path")
+              .style("stroke-opacity", 0)
+              .style("stroke", "#fff")
+              .style("stroke-width", 3);
 
-          var tooltip = d3.select("body").append("div")
-            .attr("class", "venntooltip");
+            div
+              .selectAll("g")
+              .on("mouseover", function (d, i) {
+                // sort all the areas relative to the current item
+                venn.sortAreas(div, d);
 
-          div.selectAll("path")
-            .style("stroke-opacity", 0)
-            .style("stroke", "#fff")
-            .style("stroke-width", 3)
+                // Display a tooltip with the current size
+                tooltip.transition().duration(400).style("opacity", 0.9);
+                tooltip.text(
+                  new Intl.NumberFormat("en-US").format(d.size) + " NDC groups"
+                );
 
-          div.selectAll("g")
-            .on("mouseover", function (d, i) {
-              // sort all the areas relative to the current item
-              venn.sortAreas(div, d);
+                // highlight the current path
+                var selection = d3
+                  .select(this)
+                  .transition("tooltip")
+                  .duration(400);
+                selection
+                  .select("path")
+                  .style("fill-opacity", d.sets.length == 1 ? 0.4 : 0.1)
+                  .style("stroke-opacity", 1);
+              })
 
-              // Display a tooltip with the current size
-              tooltip.transition().duration(400).style("opacity", .9);
-              tooltip.text(new Intl.NumberFormat('en-US').format(d.size) + " NDC groups");
+              .on("mousemove", function () {
+                tooltip
+                  .style("left", d3.event.pageX + 10 + "px")
+                  .style("top", d3.event.pageY - 28 + "px");
+              })
 
-              // highlight the current path
-              var selection = d3.select(this).transition("tooltip").duration(400);
-              selection.select("path")
-                .style("fill-opacity", d.sets.length == 1 ? .4 : .1)
-                .style("stroke-opacity", 1);
-            })
-
-            .on("mousemove", function () {
-              tooltip.style("left", (d3.event.pageX + 10) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-            })
-
-            .on("mouseout", function (d, i) {
-              tooltip.transition().duration(400).style("opacity", 0);
-              var selection = d3.select(this).transition("tooltip").duration(400);
-              selection.select("path")
-                .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
-                .style("stroke-opacity", 0);
-            })
+              .on("mouseout", function (d, i) {
+                tooltip.transition().duration(400).style("opacity", 0);
+                var selection = d3
+                  .select(this)
+                  .transition("tooltip")
+                  .duration(400);
+                selection
+                  .select("path")
+                  .style("fill-opacity", d.sets.length == 1 ? 0.25 : 0.0)
+                  .style("stroke-opacity", 0);
+              });
             // .on("click", function (d, i) {
             //   if (d.sets.length!=2) {
             //     var toast = new bootstrap.Toast(
@@ -200,41 +224,42 @@
             //   console.log(i)
             // }
             // )
-            ;
-        </script>
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-          <div class="toast" id="livetoast">
-            <div class="toast-header">
-              <strong class="me-auto">Toast Header</strong>
-              <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-            </div>
-            <div class="toast-body">
-              <p>Some text inside the toast body</p>
+          </script>
+          <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div class="toast" id="livetoast">
+              <div class="toast-header">
+                <strong class="me-auto">Toast Header</strong>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="toast"
+                ></button>
+              </div>
+              <div class="toast-body">
+                <p>Some text inside the toast body</p>
+              </div>
             </div>
           </div>
         </div>
 
-      </div>
+        <div class="tab-pane container-fluid fade" id="menu5">
+          <h2>Blog Post: The Price You Pay</h2>
 
-      <div class="tab-pane container-fluid fade" id="menu5">
-        <h2>Blog Post: The Price You Pay</h2>
+          <p>Inspiration MY BLOG</p>
+        </div>
+        <div class="tab-pane container-fluid fade" id="menu6">
+          <h2>Blog Post: What's Not Printed?</h2>
+          <div id="locations"></div>
 
-        <p>Inspiration MY BLOG</p>
-      </div>
-      <div class="tab-pane container-fluid fade" id="menu6">
-        <h2>Blog Post: What's Not Printed?</h2>
-        <div id="locations"></div>
+          <p>Inspiration MY BLOG</p>
+        </div>
+        <div class="tab-pane container-fluid fade" id="menu7">
+          <h2>Blog Post: Recalls and Refusals</h2>
+          <div id="locations"></div>
 
-        <p>Inspiration MY BLOG</p>
-      </div>
-      <div class="tab-pane container-fluid fade" id="menu7">
-        <h2>Blog Post: Recalls and Refusals</h2>
-        <div id="locations"></div>
-
-        <p>Inspiration MY BLOG</p>
+          <p>Inspiration MY BLOG</p>
+        </div>
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
