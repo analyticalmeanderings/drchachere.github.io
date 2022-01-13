@@ -5,7 +5,7 @@ async function getJSON(filename) {
 }
 
 google.charts.load('current', {
-  'packages': ['bar']
+  'packages': ['corechart']
 });
 google.charts.setOnLoadCallback(loadAndDrawChart);
 
@@ -27,13 +27,20 @@ function drawChart(rawData) {
   var options = {
     width: 600,
     height: 400,
-    legend: { position: 'top', maxLines: 3 },
-    bar: { groupWidth: '75%' },
-    isStacked: true
+    // legend: { position: 'top', maxLines: 3 },
+    // bar: { groupWidth: '75%' },
+    isStacked: true,
+    hAxis: { 
+      format:'',
+      showTextEvery: 1,
+      slantedText: true,
+      slantedTextAngle: 9,
+    },
   };
-  var chart = new google.charts.Bar(document.getElementById('inspections'));
+  var view = new google.visualization.DataView(data);
+  var chart = new google.visualization.ColumnChart(document.getElementById('inspections'));
 
-  chart.draw(data, options);
+  chart.draw(view, options);
 }
 
 
